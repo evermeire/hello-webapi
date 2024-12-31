@@ -14,7 +14,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 var summaries = new[]
 {
@@ -36,9 +36,27 @@ app.MapGet("/weatherforecast", () =>
 .WithName("GetWeatherForecast")
 .WithOpenApi();
 
+app.MapGet("/person", () =>
+{
+    return new {
+        FirstName = "First Name",
+        LastName = "Last Name"
+    };
+})
+.WithName("person")
+.WithOpenApi();
+
+app.MapGet("/", () =>
+{
+    return "I am a simple web service written in C# running on DotNet Core 8.0. My swagger docs are available at /swagger.";
+})
+.WithName("")
+.WithOpenApi();
+
 app.Run();
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {
     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 }
+
